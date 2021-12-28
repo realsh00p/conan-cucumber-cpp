@@ -62,7 +62,7 @@ class LibnameConan(ConanFile):
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
 
-    requires = ( "boost/1.67.0@conan/stable" )
+    requires = ( "boost/1.78.0" )
     
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -85,7 +85,7 @@ class LibnameConan(ConanFile):
 
     def requirements(self):
         if self.requires_gtest:
-            self.requires.add("gtest/1.8.0@bincrafters/stable")
+            self.requires.add("gtest/1.11.0")
             self.options['gtest'].build_gmock = True
 
     def patch_cmake_files(self):
@@ -103,9 +103,9 @@ class LibnameConan(ConanFile):
         replace(src_cmakelists_file_path, r"if\(.*(TARGET Qt5::Test).*\)", r"if(NOT CUKE_DISABLE_QT AND \1)")
 
     def source(self):
-        source_url = "https://github.com/cucumber/cucumber-cpp"
-        tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.version))
-        extracted_dir = self.name + "-" + self.version
+        source_url = "https://github.com/realsh00p/cucumber-cpp"
+        tools.get("{0}{1}".format(source_url, "/archive/refs/heads/bump_versions.zip"))
+        extracted_dir = self.name + "-bump_versions"
 
         # Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
